@@ -1,6 +1,6 @@
-import _ from "lodash";
+import { isFunction } from "lodash";
 import { useCallback, useEffect, useState } from "react";
-import { Future, FutureData } from "../../domain/entities/Future";
+import { Future, FutureData } from "./Future";
 
 type Callback = () => void;
 type FutureCalculation<Obj> = FutureData<Obj> | (() => FutureData<Obj>);
@@ -14,7 +14,7 @@ type ResultType<Obj> = {
 
 export function useFuture<Obj>(inputFuture: FutureCalculation<Obj>): ResultType<Obj> {
     const [future] = useState(() => {
-        return _.isFunction(inputFuture) ? inputFuture() : inputFuture;
+        return isFunction(inputFuture) ? inputFuture() : inputFuture;
     });
 
     const [data, setData] = useState<Obj>();
